@@ -1,0 +1,81 @@
+<div class="container">
+  <br>
+  <div>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Search Job</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="example-form" #searchNewJobRequest="ngForm" (ngSubmit)="searchJob(searchNewJobRequest.value)">
+          <mat-form-field class="example-full-width">
+            <mat-label>Job ID</mat-label>
+            <input matInput placeholder="Ex. 12345" [value]="searchMessage" type="text" name="jobId" ngModel>
+          </mat-form-field>
+          <input type="submit" mat-button value="SEARCH">
+        </form>
+        <br>
+
+        <mat-chip-list *ngIf="searchedJob.length > 0">
+          <mat-chip *ngFor="let job of searchedJob">No. {{job.id}}</mat-chip>
+          <mat-chip *ngFor="let job of searchedJob">Description: {{job.description}}</mat-chip>
+          <mat-chip *ngFor="let job of searchedJob">Status: {{job.status}}</mat-chip>
+        </mat-chip-list>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <br>
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>List of All Jobs</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]=jobs class="mat-elevation-z8">
+        <!-- jobId Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> No.</th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- jobDescription Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+        <!-- jobStatus Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Weight</th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <br>
+      <input type="button" mat-button value="REFRESH" (click)="getJobs()">
+    </mat-card-content>
+  </mat-card>
+  <br>
+  <div>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Submit New Job</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="example-form" #addNewJobRequest="ngForm" (ngSubmit)="addJob(addNewJobRequest.value)">
+          <mat-form-field class="example-full-width">
+            <mat-label>New job</mat-label>
+            <input matInput placeholder="Ex. Pizza" [value]="submitMessage" type="text" name="jobId" ngModel>
+          </mat-form-field>
+          <input type="submit" mat-button value="SUBMIT">
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <br><br>
+</div>
+
